@@ -111,7 +111,7 @@ helm install --name my-release -f values.yaml stable/home-assistant
 
 Read through the [values.yaml](values.yaml) file. It has several commented out suggested values.
 
-## Regarding configuring home assistnat
+## Regarding configuring home assistant
 
 Much of the home assistant configuration occurs inside the various files persisted to the `/config` directory.  This will require external access to the persistant storage location where the home assistant configuration data is stored.
 
