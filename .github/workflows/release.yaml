@@ -1,0 +1,38 @@
+name: Build Helm Charts
+on:
+  push:
+    branches:
+      - main  # Replace this with your main branch name
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: 'v3.7.0'  # Replace with the desired Helm version
+
+      - name: Build Charts
+        run: |
+          for dir in ./path/to/charts/*; do
+            if [ -d "$dir" ]; then
+              helm lint "$dir"
+              helm package "$dir" --destination ./path/to/package/output/
+            fi
+          done
+
+      - name: Commit chart packages
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add ./path/to/package/output/*
+          git commit -m "Update Helm chart packages [skip ci]"
+          git push
