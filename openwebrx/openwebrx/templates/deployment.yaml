@@ -1,0 +1,45 @@
+# templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "openwebrx.fullname" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "openwebrx.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "openwebrx.name" . }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8073
+
+
+
+{{- if .Values.usbDevicesEnabled }}
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: usb-volume
+              mountPath: /dev/bus/usb
+            - name: config-volume
+              mountPath: /opt/openwebrx/config_webrx.py
+              subPath: config_webrx.py
+{{- end }}
+      volumes:
+{{- if .Values.configMapEnabled }}
+        - name: config-volume
+          configMap:
+            name: {{ include "openwebrx.fullname" . }}-config
+{{- end }}
+{{- if .Values.usbDevicesEnabled }}
+        - name: usb-volume
+          hostPath:
+            path: /dev/bus/usb
+{{- end }}

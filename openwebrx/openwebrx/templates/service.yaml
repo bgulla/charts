@@ -1,0 +1,14 @@
+# templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "openwebrx.fullname" . }}
+  labels:
+    app: {{ include "openwebrx.name" . }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 8073
+  selector:
+    app: {{ include "openwebrx.name" . }}
