@@ -1,12 +1,41 @@
-# templates/configmap.yaml
-{{- if .Values.configMapEnabled }}
 apiVersion: v1
+data:
+  config_webrx.py: |
+    sdrs = {
+      "rtlsdr": {
+        "name": "RTL-SDR USB Stick",
+        "type": "rtl_sdr",
+        "ppm": 0,
+        "profiles": {},
+      },
+    }
+    x = 1
+    samp_rate = 2400000 #2.4 MHz
+    for start_freq in range(88000000, 108000000, (samp_rate - 100000)):
+      fm_profile = {
+        "name": "FM Radio " + str(x),
+        "center_freq": start_freq + (samp_rate / 2),
+        "rf_gain": 29,
+        "samp_rate": samp_rate,
+        "start_freq": start_freq,
+        "start_mod": "wfm",
+      }
+      sdrs["rtlsdr"]["profiles"]["FM" + str(x)] = fm_profile
+      x+=1
+    x=0
+    # samp_rate = 2400000 #2.4 MHz
+    # for start_freq in range(162400000, 162550000, (samp_rate - 100000)):
+    #   fm_profile = {
+    #     "name": "NOAA WX " + str(x),
+    #     "center_freq": start_freq + (samp_rate / 2),
+    #     "rf_gain": 29,
+    #     "samp_rate": samp_rate,
+    #     "start_freq": start_freq,
+    #     "start_mod": "wfm",
+    #   }
+    #   sdrs["rtlsdr"]["profiles"]["FM" + str(x)] = fm_profile
+    #   x+=1
 kind: ConfigMap
 metadata:
   name: {{ include "openwebrx.fullname" . }}-config
-data:
-  config_webrx.py: |
-  c2RycyA9IHsKICAicnRsc2RyIjogewogICAgIm5hbWUiOiAiUlRMLVNEUiBVU0IgU3RpY2siLAogICAgInR5cGUiOiAicnRsX3NkciIsCiAgICAicHBtIjogMCwKICAgICJwcm9maWxlcyI6IHt9LAogIH0sCn0KeCA9IDEKc2FtcF9yYXRlID0gMjQwMDAwMCAjMi40IE1Iegpmb3Igc3RhcnRfZnJlcSBpbiByYW5nZSg4ODAwMDAwMCwgMTA4MDAwMDAwLCAoc2FtcF9yYXRlIC0gMTAwMDAwKSk6CiAgZm1fcHJvZmlsZSA9IHsKICAgICJuYW1lIjogIkZNIFJhZGlvICIgKyBzdHIoeCksCiAgICAiY2VudGVyX2ZyZXEiOiBzdGFydF9mcmVxICsgKHNhbXBfcmF0ZSAvIDIpLAogICAgInJmX2dhaW4iOiAyOSwKICAgICJzYW1wX3JhdGUiOiBzYW1wX3JhdGUsCiAgICAic3RhcnRfZnJlcSI6IHN0YXJ0X2ZyZXEsCiAgICAic3RhcnRfbW9kIjogIndmbSIsCiAgfQogIHNkcnNbInJ0bHNkciJdWyJwcm9maWxlcyJdWyJGTSIgKyBzdHIoeCldID0gZm1fcHJvZmlsZQogIHgrPTE=
-# {{ ($.Files.Glob "config_webrx.py").asConfig | indent 2 }}
-# {{ (.Files.Get "config_webrx.py").asConfig | indent 2 }}
-{{- end }}
+

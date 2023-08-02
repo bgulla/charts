@@ -1,6 +1,7 @@
 # values.yaml
 fullname: openwebrx
-configMapEnabled: false
+configMapEnabled: true
+usbDevicesEnabled: true
 image:
   #repository: jketterl/openwebrx
   repository: harbor.lark.lol/bgulla/openwebrx

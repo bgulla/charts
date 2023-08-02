@@ -60,3 +60,27 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+# templates/helpers.tpl
+
+{{- define "openwebrx.createConfigMap" -}}
+{{- if .Values.configMapEnabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "openwebrx.fullname" . }}-config
+data:
+  config_webrx.py: |
+{{ .Files.Get "config_webrx.py" | indent 4 }}
+{{- end }}
+{{- end }}
+
+{{- define "openwebrx.enableUSBDevices" -}}
+{{- if .Values.usbDevicesEnabled }}
+securityContext:
+  privileged: true
+volumeMounts:
+  - name: usb-volume
+    mountPath: /dev/bus/usb
+{{- end }}
+{{- end }}

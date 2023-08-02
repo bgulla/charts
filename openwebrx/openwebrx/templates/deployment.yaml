@@ -3,8 +3,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "openwebrx.fullname" . }}
-  labels:
-    app: {{ include "openwebrx.name" . }}
 spec:
   replicas: 1
   selector:
@@ -21,18 +19,15 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 8073
-              protocol: TCP
+
+
+
+{{- if .Values.usbDevicesEnabled }}
           securityContext:
             privileged: true
           volumeMounts:
-            - name: dev-usb
+            - name: usb-volume
               mountPath: /dev/bus/usb
-      volumes:
-        - name: dev-usb
-          hostPath:
-            path: /dev/bus/usb
-{{- if .Values.configMapEnabled }}
-          volumeMounts:
             - name: config-volume
               mountPath: /opt/openwebrx/config_webrx.py
               subPath: config_webrx.py
@@ -42,4 +37,9 @@ spec:
         - name: config-volume
           configMap:
             name: {{ include "openwebrx.fullname" . }}-config
+{{- end }}
+{{- if .Values.usbDevicesEnabled }}
+        - name: usb-volume
+          hostPath:
+            path: /dev/bus/usb
 {{- end }}
