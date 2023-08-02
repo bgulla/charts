@@ -1,0 +1,33 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus-service
+  namespace: {{ default "kubeups" .Values.namespace | quote }}
+  annotations:
+      prometheus.io/scrape: 'true'
+      prometheus.io/port:   '9090'
+spec:
+  selector:
+    app: prometheus-server
+  type: NodePort
+  ports:
+    - port: 9090
+      targetPort: 9090
+      nodePort: {{ default 30069 .Values.prometheus.nodePort  }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana-service
+  namespace: {{ default "kubeups" .Values.namespace | quote }}
+
+spec:
+  selector:
+    app: grafana-server
+  type: NodePort
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: {{ default 30075 .Values.grafana.nodePort  }}
