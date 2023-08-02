@@ -25,7 +25,8 @@ jobs:
           for dir in ./path/to/charts/*; do
             if [ -d "$dir" ]; then
               helm lint "$dir"
-              helm package "$dir" --destination ./path/to/package/output/
+              #helm package "$dir" --destination ./path/to/package/output/
+              helm package "$dir" --destination ./docs
             fi
           done
 
@@ -33,6 +34,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add ./path/to/package/output/*
+          git add ./docs
+          #git add ./path/to/package/output/*
           git commit -m "Update Helm chart packages [skip ci]"
           git push
