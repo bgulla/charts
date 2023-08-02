@@ -1,0 +1,12 @@
+# templates/configmap.yaml
+{{- if .Values.configMapEnabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "openwebrx.fullname" . }}-config
+data:
+  config_webrx.py: |
+  c2RycyA9IHsKICAicnRsc2RyIjogewogICAgIm5hbWUiOiAiUlRMLVNEUiBVU0IgU3RpY2siLAogICAgInR5cGUiOiAicnRsX3NkciIsCiAgICAicHBtIjogMCwKICAgICJwcm9maWxlcyI6IHt9LAogIH0sCn0KeCA9IDEKc2FtcF9yYXRlID0gMjQwMDAwMCAjMi40IE1Iegpmb3Igc3RhcnRfZnJlcSBpbiByYW5nZSg4ODAwMDAwMCwgMTA4MDAwMDAwLCAoc2FtcF9yYXRlIC0gMTAwMDAwKSk6CiAgZm1fcHJvZmlsZSA9IHsKICAgICJuYW1lIjogIkZNIFJhZGlvICIgKyBzdHIoeCksCiAgICAiY2VudGVyX2ZyZXEiOiBzdGFydF9mcmVxICsgKHNhbXBfcmF0ZSAvIDIpLAogICAgInJmX2dhaW4iOiAyOSwKICAgICJzYW1wX3JhdGUiOiBzYW1wX3JhdGUsCiAgICAic3RhcnRfZnJlcSI6IHN0YXJ0X2ZyZXEsCiAgICAic3RhcnRfbW9kIjogIndmbSIsCiAgfQogIHNkcnNbInJ0bHNkciJdWyJwcm9maWxlcyJdWyJGTSIgKyBzdHIoeCldID0gZm1fcHJvZmlsZQogIHgrPTE=
+# {{ ($.Files.Glob "config_webrx.py").asConfig | indent 2 }}
+# {{ (.Files.Get "config_webrx.py").asConfig | indent 2 }}
+{{- end }}

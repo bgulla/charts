@@ -31,3 +31,15 @@ spec:
         - name: dev-usb
           hostPath:
             path: /dev/bus/usb
+{{- if .Values.configMapEnabled }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /opt/openwebrx/config_webrx.py
+              subPath: config_webrx.py
+{{- end }}
+      volumes:
+{{- if .Values.configMapEnabled }}
+        - name: config-volume
+          configMap:
+            name: {{ include "openwebrx.fullname" . }}-config
+{{- end }}

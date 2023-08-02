@@ -1,5 +1,6 @@
 # values.yaml
 fullname: openwebrx
+configMapEnabled: false
 image:
   #repository: jketterl/openwebrx
   repository: harbor.lark.lol/bgulla/openwebrx
@@ -15,8 +16,6 @@ service:
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
-
-
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
