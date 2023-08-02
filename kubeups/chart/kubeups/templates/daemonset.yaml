@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: apcupsd
+  namespace: {{ default "kubeups" .Values.namespace | quote }}
+  labels:
+    k8s-app: apcupsd
+spec:
+  selector:
+    matchLabels:
+      name: apcupsd
+  revisionHistoryLimit: 10
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: "9090"
+        prometheus.io/scrape: "true"
+      labels:
+        name: apcupsd
+    spec:
+      hostNetwork: true
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: has_ups
+                operator: In
+                values:
+                - "true"
+      containers:
+      - image: bgulla/apcupsd
+        imagePullPolicy: Always
+        name: power-monitoring
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: true
+          capabilities: {}
+          privileged: true
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+      - env:
+        - name: APCUPSD_HOST
+          value: 0.0.0.0:3551
+        - name: PROM_HOST
+          value: 0.0.0.0:9090
+        - name: HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        image: {{ default "bgulla/apcupsd_exporter" .Values.prometheus_exporter.image.name }}
+        imagePullPolicy: {{ default "Always" .Values.prometheus_exporter.image.pullPolicy }}
+        name: promexporter
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+      {{ if .Values.mqtt.enabled }}
+      - env:
+        - name: APCUPSD_HOST
+          value: {{ .Values.mqtt.apcupsd_host | quote }}
+        - name: MQTT_HOST
+          value: {{ .Values.mqtt.host | quote }}
+        - name: MQTT_PORT
+          value: {{ .Values.mqtt.port | quote }}
+        - name: MQTT_USER
+          value: {{ default "" .Values.mqtt.user | quote }}
+        - name: MQTT_PASSWORD
+          value: {{ default "" .Values.mqtt.password | quote }}
+        image: {{ default "bgulla/apcupsd-mqtt" .Values.mqtt.image.name }}
+        imagePullPolicy: {{ default "Always" .Values.mqtt.image.PullPolicy }}
+        name: {{ default "mqttexporter"  .Values.mqtt.name }}
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+      {{ end }}

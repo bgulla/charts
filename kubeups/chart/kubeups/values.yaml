@@ -1,0 +1,108 @@
+# Default values for kubeups.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+name: kubeups
+namespace: kubeups
+
+# Export all UPS stats to a MQTT-Broker
+## mqtt topic format: /apcupsd/<hostname>/<stat_name>"
+mqtt:
+  enabled: false
+  image: 
+    name: bgulla/apcupsd-mqtt
+    pullPolicy: Always
+  name: mqttexporter
+  host: kubeups.mqtt.svc
+  port: 1883
+  apcupsd_host: 127.0.0.1
+  password:
+  user: 
+
+prometheus:
+  image:
+    name: prom/prometheus:latest
+  nodePort: 30069
+
+grafana:
+  image:
+    name: grafana/grafana:6.7.1-ubuntu
+  nodePort: 30075
+  auth:
+    basic:
+      enabled: true
+    anonymous:
+      enabled: true
+
+prometheus_exporter:
+  image:
+    name: bgulla/apcupsd_exporter
+    pullPolicy: Always
+
+apcupsd:
+  image:
+    repository: bgulla/apcupsd
+
+
+## Not yet working
+image:
+  repository: bgulla/apcupsd
+  pullPolicy: IfNotPresent
+
+## Not yet working
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: prometheus
+
+
+## Persist data to a persitent volume
+persistence:
+  enabled: false
+  ## If defined, volume.beta.kubernetes.io/storage-class: <storageClass>
+  ## Default: volume.alpha.kubernetes.io/storage-class: default
+  ##
+  # storageClass:
+  accessMode: ReadWriteOnce
+  size: 8Gi
+
+## Not yet working
+service:
+  type: ClusterIP
+  port: 80
+
+## Not yet working
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths: []
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+## Not yet working
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+## Not yet working
+nodeSelector: {}
+## Not yet working
+tolerations: []
+## Not yet working
+affinity: {}

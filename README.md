@@ -1,2 +1,3 @@
-# charts
-helm all the things
+# My Personal Charts
+
+![HelmCharts](/static/meme.png?raw=true) 
