@@ -3,9 +3,9 @@ entries:
   kubeups:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-08-02T21:39:38.547001582Z"
+    created: "2023-08-02T21:42:04.15187333Z"
     description: A Helm chart for Kubernetes
-    digest: e75e6f686e739125339ee0eb0ffdda41ff25ad7deb11095111af1a1f26df59b0
+    digest: 55aba5758d7100ba1a8f48329c993fae7ba4cb39dc18cb3228f2230ceccdc115
     name: kubeups
     type: application
     urls:
@@ -13,11 +13,11 @@ entries:
     version: 0.1.0
   openwebrx:
   - apiVersion: v2
-    created: "2023-08-02T21:39:40.49241096Z"
+    created: "2023-08-02T21:42:06.496940738Z"
     description: Helm chart for deploying OpenWebRX
-    digest: a1f68586eb27d2f01701fc0f610f3e50111ef27fcf0c8de398280d51ae1348dc
+    digest: 45bd8daa61457d571d5bba595a7c856606c7838202404ae612f41e00ab5b0a07
     name: openwebrx
     urls:
     - https://github.com/bgulla/charts/releases/download/openwebrx-0.1.0/openwebrx-0.1.0.tgz
     version: 0.1.0
-generated: "2023-08-02T21:39:40.491555151Z"
+generated: "2023-08-02T21:42:06.496243932Z"
