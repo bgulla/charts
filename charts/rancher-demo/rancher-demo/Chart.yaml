@@ -1,0 +1,4 @@
+apiVersion: v2
+name: rancher-demo
+description: A Helm chart for Kubernetes to deploy the bgulla/rancher-demo Docker image
+version: 0.1.0
