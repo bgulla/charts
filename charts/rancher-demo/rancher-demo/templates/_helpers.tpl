@@ -12,15 +12,6 @@
 {{- end -}}
 {{- end -}}
 
-{{/* Create a default fully qualified app name */}}
-{{- define "rancher-demo.fullname" -}}
-{{- if .Values.fullnameOverride -}}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
-{{- else -}}
-{{- printf "%s-%s" .Release.Name (include "rancher-demo.name" .) | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-{{- end -}}
-
 {{/* Generate standard labels */}}
 {{- define "rancher-demo.labels" -}}
 app.kubernetes.io/name: {{ include "rancher-demo.name" . }}

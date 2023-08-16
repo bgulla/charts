@@ -12,4 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app: rancher-demo
+    app.kubernetes.io/name: rancher-demo

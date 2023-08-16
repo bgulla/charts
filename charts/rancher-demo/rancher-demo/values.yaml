@@ -1,5 +1,7 @@
 replicaCount: 1
 
+navLink:
+  enabled: true
 image:
   repository: bgulla/rancher-demo
   tag: latest
