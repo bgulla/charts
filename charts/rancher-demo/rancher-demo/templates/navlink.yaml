@@ -1,0 +1,14 @@
+{{- if .Values.navLink.enabled }}
+apiVersion: ui.cattle.io/v1
+kind: NavLink
+metadata:
+  name: rancher-demo-navlink
+spec:
+  label: Rancher-Demo
+  target: _blank
+  toService:
+    name: rancher-demo-http
+    namespace: default
+    port: '8080'
+    scheme: http
+{{- end }}
