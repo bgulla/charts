@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: rancher-demo-http
   labels:
-    {{- include "rancher-demo.labels" . | nindent 4 }}
+    app: rancher-demo
 spec:
   type: ClusterIP
   ports:
@@ -12,5 +12,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: {{ include "rancher-demo.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    app: rancher-demo

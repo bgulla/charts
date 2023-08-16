@@ -1,0 +1,15 @@
+replicaCount: 1
+
+image:
+  repository: bgulla/rancher-demo
+  tag: latest
+  pullPolicy: IfNotPresent
+
+ingress:
+  enabled: true
+  annotations: {}
+  hosts:
+    - host: sslip.io
+      paths:
+        - path: /
+          pathType: Prefix

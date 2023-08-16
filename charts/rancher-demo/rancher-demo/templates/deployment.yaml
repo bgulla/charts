@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "rancher-demo.fullname" . }}
   labels:
-    {{- include "rancher-demo.labels" . | nindent 4 }}
+    app: rancher-demo
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
