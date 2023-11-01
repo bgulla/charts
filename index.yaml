@@ -3,9 +3,9 @@ entries:
   kubeups:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-11-01T21:50:03.395867502Z"
+    created: "2023-11-01T21:53:05.01684231Z"
     description: A Helm chart for Kubernetes
-    digest: af784a2709e286f11347ee33ef4e715c83b013203fc0f172cdfceff7d3a5033b
+    digest: 8fc922d8fd02995bdbab1e180243db0db502ae6f19797150ee1299824286b9f8
     name: kubeups
     type: application
     urls:
@@ -13,21 +13,21 @@ entries:
     version: 0.1.0
   openwebrx:
   - apiVersion: v2
-    created: "2023-11-01T21:50:05.620481353Z"
+    created: "2023-11-01T21:53:03.218141316Z"
     description: Helm chart for deploying OpenWebRX
-    digest: b1ab485dcd3cd51f5e953c8cc15408e21b6522599de642793d8181d942431d87
+    digest: 856ed0288baa41e4c0d9f8497c7670f1fd1b1529360db998b9341389da2bf4c2
     name: openwebrx
     urls:
     - https://github.com/bgulla/charts/releases/download/openwebrx-0.1.0/openwebrx-0.1.0.tgz
     version: 0.1.0
   rancher-demo:
   - apiVersion: v2
-    created: "2023-11-01T21:50:00.878970747Z"
+    created: "2023-11-01T21:53:01.41605735Z"
     description: A Helm chart for Kubernetes to deploy the bgulla/rancher-demo Docker
       image
-    digest: 82e1a1b8f157ffb3f776f04a93c3bf465b8a565dafc6f7cb22824b9d334142a4
+    digest: 4b14ed71eb66c24fdbca4d7480b7c3d54616a7d1b366de3dc182911c3dd6cf3a
     name: rancher-demo
     urls:
     - https://github.com/bgulla/charts/releases/download/rancher-demo-0.1.0/rancher-demo-0.1.0.tgz
     version: 0.1.0
-generated: "2023-11-01T21:50:05.619245605Z"
+generated: "2023-11-01T21:53:05.010109468Z"
