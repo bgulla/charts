@@ -1,0 +1,20 @@
+replicaCount: 1
+
+image:
+  repository: hertzg/rtl_433
+  pullPolicy: IfNotPresent
+  tag: latest
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 80
+
+args:
+  - "-Mtime:unix:usec:utc"
+  - "-Mbits"
+  - "-Mlevel"
+  - "-Mprotocol"
+  - "-Mstats:2:300"
+  - "-Fmqtt://mosquitto:1883,retain=1"
+  - "-Finflux://influxdb:8086/write?db=rtl433"
