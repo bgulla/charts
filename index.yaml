@@ -11,12 +11,22 @@ entries:
     urls:
     - https://github.com/bgulla/charts/releases/download/homeassistant-0.1.0/homeassistant-0.1.0.tgz
     version: 0.1.0
+  kitchensink:
+  - apiVersion: v2
+    appVersion: "1.0"
+    created: "2025-02-03T20:13:56.66507555Z"
+    description: A Helm chart for deploying media applications
+    digest: 9542f56f07b8e670de36776a7cc6989cd6402f7425ca6c14624415e597ec90d8
+    name: kitchensink
+    urls:
+    - https://github.com/bgulla/charts/releases/download/kitchensink-0.1.0/kitchensink-0.1.0.tgz
+    version: 0.1.0
   kubeups:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-11-02T05:48:25.259054926Z"
+    created: "2025-02-03T20:14:01.587055433Z"
     description: A Helm chart for Kubernetes
-    digest: cdad8e1aeaba83590c81162a4eac0e045734a196d0f34d8f5dcaafc6d55d617c
+    digest: 8ad13bd5a7a2de03ed74e807eed88dc9fc52cd2fb431bef176d5f688ec2a32f3
     name: kubeups
     type: application
     urls:
@@ -35,21 +45,21 @@ entries:
     version: 2.4.1
   openwebrx:
   - apiVersion: v2
-    created: "2023-11-02T05:48:19.444306773Z"
+    created: "2025-02-03T20:13:59.921712771Z"
     description: Helm chart for deploying OpenWebRX
-    digest: 8a8dffb65fb56e481ee5f4f9abfa263b5bbab0a44b4924ca10657cb0164f3946
+    digest: 1b8da158e65be055d1e92b32d52c360c1f2d3282b2e93165dac431c6841869c6
     name: openwebrx
     urls:
     - https://github.com/bgulla/charts/releases/download/openwebrx-0.1.0/openwebrx-0.1.0.tgz
     version: 0.1.0
   rancher-demo:
   - apiVersion: v2
-    created: "2023-11-02T05:48:16.629836892Z"
+    created: "2025-02-03T20:13:58.323746341Z"
     description: A Helm chart for Kubernetes to deploy the bgulla/rancher-demo Docker
       image
-    digest: c448181d51ec3708b0b54faf7f64eee753ca4b6b362b3fa35641d2688089b32b
+    digest: a40aa0d854b23cddad4067a6209f07879e2ef65c9b5d7b8ee17041636e9289ec
     name: rancher-demo
     urls:
     - https://github.com/bgulla/charts/releases/download/rancher-demo-0.1.0/rancher-demo-0.1.0.tgz
     version: 0.1.0
-generated: "2023-11-02T05:48:27.97099824Z"
+generated: "2025-02-03T20:14:01.582759282Z"
