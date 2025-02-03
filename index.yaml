@@ -14,9 +14,9 @@ entries:
   kitchensink:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-02-03T20:13:56.66507555Z"
+    created: "2025-02-03T20:38:37.357968882Z"
     description: A Helm chart for deploying media applications
-    digest: 9542f56f07b8e670de36776a7cc6989cd6402f7425ca6c14624415e597ec90d8
+    digest: 4122e9e6f275b632831d8a46daa7da8acb72e1ca68cebde5c1c50351594e1f45
     name: kitchensink
     urls:
     - https://github.com/bgulla/charts/releases/download/kitchensink-0.1.0/kitchensink-0.1.0.tgz
@@ -24,9 +24,9 @@ entries:
   kubeups:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-02-03T20:14:01.587055433Z"
+    created: "2025-02-03T20:38:40.999490902Z"
     description: A Helm chart for Kubernetes
-    digest: 8ad13bd5a7a2de03ed74e807eed88dc9fc52cd2fb431bef176d5f688ec2a32f3
+    digest: 0e5d018fe02f3016f88bfc72dcad8f714b1570ab72df24a1c5ffdce2ea80c905
     name: kubeups
     type: application
     urls:
@@ -45,21 +45,21 @@ entries:
     version: 2.4.1
   openwebrx:
   - apiVersion: v2
-    created: "2025-02-03T20:13:59.921712771Z"
+    created: "2025-02-03T20:38:39.760445702Z"
     description: Helm chart for deploying OpenWebRX
-    digest: 1b8da158e65be055d1e92b32d52c360c1f2d3282b2e93165dac431c6841869c6
+    digest: 47c4814070b3fb19ad22b8280406181cc2ea4faf1dbe77325046b9f8fb117639
     name: openwebrx
     urls:
     - https://github.com/bgulla/charts/releases/download/openwebrx-0.1.0/openwebrx-0.1.0.tgz
     version: 0.1.0
   rancher-demo:
   - apiVersion: v2
-    created: "2025-02-03T20:13:58.323746341Z"
+    created: "2025-02-03T20:38:38.516554455Z"
     description: A Helm chart for Kubernetes to deploy the bgulla/rancher-demo Docker
       image
-    digest: a40aa0d854b23cddad4067a6209f07879e2ef65c9b5d7b8ee17041636e9289ec
+    digest: b871407bb30da2452011c817a3090f6618e3a11ac2dcd56e2674ffe2793ffffb
     name: rancher-demo
     urls:
     - https://github.com/bgulla/charts/releases/download/rancher-demo-0.1.0/rancher-demo-0.1.0.tgz
     version: 0.1.0
-generated: "2025-02-03T20:14:01.582759282Z"
+generated: "2025-02-03T20:38:40.995314997Z"
