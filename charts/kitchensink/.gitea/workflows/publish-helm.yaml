@@ -1,0 +1,36 @@
+name: Build and Publish Helm Chart
+
+on:
+  push:
+    branches:
+      - main
+      - 'release/*'
+  pull_request:
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+#        uses: azure/setup-helm@v4.2
+
+      - name: Build Helm Chart
+        run: helm package ./kitchensink
+
+      - name: Login to Harbor
+        env:
+          HARBOR_USERNAME: ${{ secrets.HARBOR_L0L0_USER }}
+          HARBOR_PASSWORD: ${{ secrets.HARBOR_L0L0_PASSWORD }}
+        run: |
+          echo $HARBOR_PASSWORD | helm registry login harbor.l0l0.lol --username $HARBOR_USERNAME --password-stdin
+
+      - name: Publish Helm Chart
+        run: |
+          CHART_NAME=$(ls *.tgz)
+          echo "Pushing: ${CHART_NAME}"
+          echo "heres the echo: helm push $CHART_NAME oci://harbor.l0l0.lol/charts"
+          helm push $CHART_NAME oci://harbor.l0l0.lol/charts

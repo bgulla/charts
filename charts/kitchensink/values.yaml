@@ -1,0 +1,60 @@
+replicaCount: 1
+fullnameOverride: whoami
+pvcSuffix: "whoami"
+
+image:
+  repository: traefik/whoami
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  # port: 8989 # sokitchensinkr
+  port: 80 # prowlarr
+
+# Add the following for configurable UID and GID
+PUID: 1000
+PGID: 1000
+
+# env: []
+env: 
+  TZ: "America/New_York"
+
+ingress:
+  enabled: false
+  className: ""
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: whoami test
+    gethomepage.dev/group: Infra
+    gethomepage.dev/name: Traefik Whoami Cakitchensinky
+    gethomepage.dev/icon: "https://avatars.githubusercontent.com/u/73049443?s=280&v=4"
+
+  hosts:
+    - host: cakitchensinky.l0l0.lol
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+    # - secretName: tls-tpi-wildcard
+    #   hosts:
+    #     - whoami.tpi.l0l0.lol
+
+persistence:
+  config:
+    enabled: false
+    storageClass: ""
+    accessMode: ReadWriteOnce
+    size: 1Gi
+  nfs:
+      enabled: true
+      mounts: 
+        - name: traefik-whoami
+          server: nas1-10g.lark.lol
+          path: "/volume1/media"
+          mountPath: "/media"
+
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
