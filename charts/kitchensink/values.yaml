@@ -47,7 +47,7 @@ persistence:
     accessMode: ReadWriteOnce
     size: 1Gi
   nfs:
-      enabled: true
+      enabled: false
       mounts: 
         - name: traefik-whoami
           server: nas1-10g.lark.lol
