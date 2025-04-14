@@ -4,7 +4,7 @@ pvcSuffix: "whoami"
 
 image:
   repository: traefik/whoami
-  tag: latest
+  tag: v1.11
   pullPolicy: IfNotPresent
 
 service:
