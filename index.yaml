@@ -14,6 +14,15 @@ entries:
   kitchensink:
   - apiVersion: v2
     appVersion: "1.0"
+    created: "2025-04-15T14:32:33.01706397Z"
+    description: A Helm chart for deploying media applications
+    digest: 6756ffac769ede45351155685ded152c34bf2c4803f7b278bf9693cc007e6348
+    name: kitchensink
+    urls:
+    - https://github.com/bgulla/charts/releases/download/kitchensink-0.1.3/kitchensink-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: "1.0"
     created: "2025-04-15T14:32:13.814077395Z"
     description: A Helm chart for deploying media applications
     digest: eb752edceb6f9e2906f73221998ce4b3bd5a5d9dc39a5a729e016f15f5de91fc
@@ -42,9 +51,9 @@ entries:
   kubeups:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-04-15T14:32:17.836319267Z"
+    created: "2025-04-15T14:32:38.313277676Z"
     description: A Helm chart for Kubernetes
-    digest: b10b300dadee9a358b0c73d631dc11ef6cd8a80c9b1e48ca901888927d9a1d5c
+    digest: 82e1b056bce357f27da9932efeddc4469c2b9f0a4fbdd56270bdeae451a050a6
     name: kubeups
     type: application
     urls:
@@ -63,21 +72,21 @@ entries:
     version: 2.4.1
   openwebrx:
   - apiVersion: v2
-    created: "2025-04-15T14:32:16.480460519Z"
+    created: "2025-04-15T14:32:36.498805959Z"
     description: Helm chart for deploying OpenWebRX
-    digest: 23c050d7ae104ae8586c4750a6f410a624dd885596d5bb6183b27cc5a7015857
+    digest: 0cc5ed9a010a0d696dd4f85e75a78a98ea15c910c555ab87727df048cab690f6
     name: openwebrx
     urls:
     - https://github.com/bgulla/charts/releases/download/openwebrx-0.1.0/openwebrx-0.1.0.tgz
     version: 0.1.0
   rancher-demo:
   - apiVersion: v2
-    created: "2025-04-15T14:32:15.199523372Z"
+    created: "2025-04-15T14:32:34.743136602Z"
     description: A Helm chart for Kubernetes to deploy the bgulla/rancher-demo Docker
       image
-    digest: 7b9dc4a116e6d57df4a28e732a01a56f7d277608e5ae5b9d0aabbbdeebca64f5
+    digest: 1eded94d9207d727d661e44ce328143b55b7481e4a70ecdb947949d5732f998f
     name: rancher-demo
     urls:
     - https://github.com/bgulla/charts/releases/download/rancher-demo-0.1.0/rancher-demo-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-15T14:32:17.832053872Z"
+generated: "2025-04-15T14:32:38.308981573Z"
