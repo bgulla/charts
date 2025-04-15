@@ -3,7 +3,7 @@ fullnameOverride: whoami
 pvcSuffix: "whoami"
 
 image:
-  repository: traefik/whoami
+  repository: docker.io/traefik/whoami
   tag: v1.11
   pullPolicy: IfNotPresent
 
