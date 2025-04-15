@@ -28,8 +28,10 @@ spec:
           ports:
             - containerPort: {{ .Values.service.port }}
           volumeMounts:
+            {{- if .Values.persistence.config.enabled }}
             - name: config
               mountPath: /config
+            {{- end }}
             {{- if .Values.persistence.nfs.enabled }}
             {{- range .Values.persistence.nfs.mounts }}
             - name: {{ .name }}
@@ -37,9 +39,11 @@ spec:
             {{- end }}
             {{- end }}
       volumes:
+        {{- if .Values.persistence.config.enabled }}
         - name: config
           persistentVolumeClaim:
             claimName: {{ include "kitchensink.fullname" . }}-config
+        {{- end }}
         {{- if .Values.persistence.nfs.enabled }}
         {{- range .Values.persistence.nfs.mounts }}
         - name: {{ .name }}
