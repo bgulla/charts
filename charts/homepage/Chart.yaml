@@ -9,7 +9,7 @@ sources:
   - https://github.com/jameswynn/helm-charts/charts/homepage
   - https://github.com/gethomepage/homepage/
 maintainers:
-  - name: jameswynn
+  - name: bgulla
 annotations:
   artifacthub.io/changes: |-
     - kind: added
