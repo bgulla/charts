@@ -30,7 +30,7 @@ No manual intervention needed - just bump the version in `Chart.yaml` and push!
 |-------|-------------|--------|
 | **kitchensink** | Kitchen sink demo application | |
 | **kubeups** | Kubernetes UPS monitoring | |
-| **meshmonitor** | Service mesh monitoring solution | https://github.com/yeraze/meshmonitor |
+| **meshmonitor** | Meshtastic Radio monitoring solution | https://github.com/yeraze/meshmonitor |
 | **openwebrx** | Web-based SDR receiver | https://github.com/jketterl/openwebrx |
 | **rancher-demo** | Rancher demonstration environment | |
 
