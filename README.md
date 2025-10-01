@@ -31,7 +31,7 @@ No manual intervention needed - just bump the version in `Chart.yaml` and push!
 | **homepage** | Modern, customizable application dashboard with 25+ service integrations | https://gethomepage.dev |
 | **kitchensink** | Kitchen sink demo application | |
 | **kubeups** | Kubernetes UPS monitoring | |
-| **meshmonitor** | Service mesh monitoring solution | https://github.com/yeraze/meshmonitor |
+| **meshmonitor** | Meshtastic Radio monitoring solution | https://github.com/yeraze/meshmonitor |
 | **openwebrx** | Web-based SDR receiver | https://github.com/jketterl/openwebrx |
 | **rancher-demo** | Rancher demonstration environment | |
 
@@ -61,4 +61,4 @@ helm install test-release ./<chart-name>-<version>.tgz
 
 ## License
 
-This project is licensed under the **ANYONEBUTPHIL LICENSE** - a legally binding Apache 2.0 derivative with a singular, non-negotiable restriction: Philip Edward Brooks is explicitly prohibited from using, modifying, or distributing this software. Everyone else is welcome to use it freely under standard Apache 2.0 terms. Yes, this is a real license. No, we're not joking. Phil knows what he did. See the [LICENSE](LICENSE) file for full details.
+This project is licensed under the **ANYONEBUTPHIL LICENSE** - a legally binding Apache 2.0 derivative with a singular, non-negotiable restriction: Philip Brooks is explicitly prohibited from using, modifying, or distributing this software. Everyone else is welcome to use it freely under standard Apache 2.0 terms. Yes, this is a real license. No, we're not joking. Phil knows what he did. See the [LICENSE](LICENSE) file for full details.
