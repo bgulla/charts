@@ -1,17 +1,11 @@
-{{- define "homepage.configmap" -}}
-{{ if not .Values.config.useExistingConfigMap }}
+{{- if not .Values.config.useExistingConfigMap }}
 ---
-{{ $values := .Values -}}
-{{- $configName := include "bjw-s.common.lib.chart.names.fullname" . -}}
-{{- if and (hasKey $values "nameOverride") $values.nameOverride -}}
-  {{- $configName = printf "%v-%v" $configName $values.nameOverride -}}
-{{ end -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ $configName }}
+  name: {{ include "homepage.fullname" . }}
   labels:
-    {{- include "bjw-s.common.lib.metadata.allLabels" . | nindent 4 }}
+    {{- include "homepage.labels" . | nindent 4 }}
 data:
   bookmarks.yaml: {{- if .Values.config.bookmarks }} |
 {{- .Values.config.bookmarks | toYaml | nindent 4}}
@@ -49,5 +43,4 @@ data:
 {{- .Values.config.widgetsString | nindent 4}}
 {{- else }} ""
 {{- end }}
-{{ end }}
 {{- end }}
