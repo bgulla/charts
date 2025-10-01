@@ -28,6 +28,7 @@ No manual intervention needed - just bump the version in `Chart.yaml` and push!
 
 | Chart | Description | Source |
 |-------|-------------|--------|
+| **homepage** | Modern, customizable application dashboard with 25+ service integrations | https://gethomepage.dev |
 | **kitchensink** | Kitchen sink demo application | |
 | **kubeups** | Kubernetes UPS monitoring | |
 | **meshmonitor** | Service mesh monitoring solution | https://github.com/yeraze/meshmonitor |
