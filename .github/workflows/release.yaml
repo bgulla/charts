@@ -68,11 +68,43 @@ jobs:
                   echo "====================================================="
                   echo "Release/tag exists for '$chart_tag'. Updating asset.."
                   echo "====================================================="
-                  existing_asset_id=$(curl -S -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/$GITHUB_REPOSITORY/releases/tags/$chart_tag 2>/dev/null | jq -r ".assets[] | select(.name==\"$chart_tag.tgz\")" | jq -r '.id')
-                  curl -S -H "Authorization: Bearer $GITHUB_TOKEN" -X DELETE https://api.github.com/repos/$GITHUB_REPOSITORY/releases/assets/$existing_asset_id 2>/dev/null
+                  
+                  # Get release info and check if valid
+                  release_info=$(curl -S -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/$GITHUB_REPOSITORY/releases/tags/$chart_tag 2>/dev/null)
+                  
+                  # Check if we got a valid response (not a 404)
+                  if echo "$release_info" | jq -e '.message == "Not Found"' > /dev/null 2>&1; then
+                      echo "Error: Release not found despite initial check. This may be a race condition."
+                      echo "Attempting to create release instead..."
+                      
+                      helm package -d /tmp/charts $chart_dir
+                      chart_tar="$chart_tag.tgz"
+                      git tag "$chart_tag" 2>/dev/null || echo "Tag already exists"
+                      git push origin tags/$chart_tag 2>/dev/null || echo "Tag already pushed"
+                      release_response=$(curl -S -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/repos/$GITHUB_REPOSITORY/releases -d "{\"tag_name\":\"$chart_tag\",\"name\":\"$chart_tag\",\"body\":\"Chart release for '$chart_tag'.\",\"draft\":false,\"prerelease\":false,\"generate_release_notes\":false}" 2>/dev/null)
+                      upload_url=$(echo $release_response | jq -r '.url' | sed 's/api/uploads/g')
+                      asset_response=$(curl -S -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" -H "Content-Type: $(file -b --mime-type /tmp/charts/$chart_tar)" "$upload_url/assets?name=$chart_tar" --data-binary "@/tmp/charts/$chart_tar" 2>/dev/null)
+                      asset_download_url="https://github.com/$GITHUB_REPOSITORY/releases/download/$chart_tag"
+                      helm repo index --merge $GITHUB_WORKSPACE/index/index.yaml --url $asset_download_url /tmp/charts
+                      mv /tmp/charts/index.yaml $GITHUB_WORKSPACE/index/index.yaml
+                      rm -f /tmp/charts/$chart_tar
+                      continue
+                  fi
+                  
+                  # Get existing asset ID if it exists
+                  existing_asset_id=$(echo "$release_info" | jq -r ".assets[] | select(.name==\"$chart_tag.tgz\") | .id")
+                  
+                  # Delete existing asset if found
+                  if [ -n "$existing_asset_id" ] && [ "$existing_asset_id" != "null" ]; then
+                      echo "Deleting existing asset with ID: $existing_asset_id"
+                      curl -S -H "Authorization: Bearer $GITHUB_TOKEN" -X DELETE https://api.github.com/repos/$GITHUB_REPOSITORY/releases/assets/$existing_asset_id 2>/dev/null
+                  else
+                      echo "No existing asset found to delete"
+                  fi
+                  
                   helm package -d /tmp/charts $chart_dir
                   chart_tar="$chart_tag.tgz"
-                  upload_url=$(curl -S -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/$GITHUB_REPOSITORY/releases/tags/$chart_tag 2>/dev/null | jq -r '.url' | sed 's/api/uploads/g')
+                  upload_url=$(echo "$release_info" | jq -r '.url' | sed 's/api/uploads/g')
                   asset_response=$(curl -S -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer $GITHUB_TOKEN" -H "X-GitHub-Api-Version: 2022-11-28" -H "Content-Type: $(file -b --mime-type /tmp/charts/$chart_tar)" "$upload_url/assets?name=$chart_tar" --data-binary "@/tmp/charts/$chart_tar" 2>/dev/null)
                   asset_download_url="https://github.com/$GITHUB_REPOSITORY/releases/download/$chart_tag"
                   helm repo index --merge $GITHUB_WORKSPACE/index/index.yaml --url $asset_download_url /tmp/charts
