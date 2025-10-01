@@ -129,7 +129,8 @@ config:
 #   TZ: "UTC"
 #   LOG_LEVEL: "info"
 #   HOMEPAGE_VAR_TITLE: "My Homepage"
-envVars: {}
+#envVars:
+#  HOMEPAGE_ALLOWED_HOSTS: homepage.l0l0.lol
 
 # -- Main environment variables. Template enabled.
 # Syntax options:
