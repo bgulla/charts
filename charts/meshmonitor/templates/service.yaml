@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "meshmonitor.fullname" . }}
+  labels:
+    {{- include "meshmonitor.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+      protocol: TCP
+      name: http
+      {{- if and .Values.nodePort.enabled (eq .Values.service.type "NodePort") }}
+      nodePort: {{ .Values.nodePort.port }}
+      {{- end }}
+  selector:
+    {{- include "meshmonitor.selectorLabels" . | nindent 4 }}

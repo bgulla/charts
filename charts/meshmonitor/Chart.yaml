@@ -1,0 +1,5 @@
+apiVersion: v2
+name: meshmonitor
+description: A Helm chart for deploying Meshmonitor
+version: 0.1.0
+appVersion: "latest"

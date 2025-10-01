@@ -1,0 +1,39 @@
+replicaCount: 1
+fullnameOverride: meshmonitor
+
+image:
+  repository: harbor.l0l0.lol/proxy-ghcr/yeraze/meshmonitor
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 3001
+
+env:
+  MESHTASTIC_NODE_IP: "10.0.1.56"
+  MESHTASTIC_USE_TLS: "false"
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # gethomepage.dev/enabled: "true"
+    # gethomepage.dev/description: Meshtastic Monitor
+    # gethomepage.dev/group: Monitoring
+    # gethomepage.dev/name: Meshmonitor
+  hosts:
+    - host: meshmonitor.example.com
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+nodePort:
+  enabled: false
+  port: 30823
+
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
