@@ -46,6 +46,7 @@ persistence:
     storageClass: ""
     accessMode: ReadWriteOnce
     size: 1Gi
+    mountPath: /config
   nfs:
       enabled: false
       mounts: 

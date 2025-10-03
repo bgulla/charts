@@ -30,7 +30,7 @@ spec:
           volumeMounts:
             {{- if .Values.persistence.config.enabled }}
             - name: config
-              mountPath: /config
+              mountPath: {{ .Values.persistence.config.mountPath | default "/config" }}
             {{- end }}
             {{- if .Values.persistence.nfs.enabled }}
             {{- range .Values.persistence.nfs.mounts }}

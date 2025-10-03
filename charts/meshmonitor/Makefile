@@ -1,7 +1,7 @@
 .PHONY: lint template install upgrade uninstall clean
 
 CHART_NAME := meshmonitor
-NAMESPACE := default
+NAMESPACE := meshmonitor
 RELEASE_NAME := $(CHART_NAME)
 
 lint:
@@ -11,10 +11,10 @@ template:
 	helm template $(RELEASE_NAME) .
 
 install:
-	helm install $(RELEASE_NAME) . -n $(NAMESPACE)
+	helm install $(RELEASE_NAME) . -n $(NAMESPACE) 
 
 upgrade:
-	helm upgrade --install $(RELEASE_NAME) . -n $(NAMESPACE)
+	helm upgrade --install $(RELEASE_NAME) . -n $(NAMESPACE) --values ./values-prob.yaml --create-namespace
 
 uninstall:
 	helm uninstall $(RELEASE_NAME) -n $(NAMESPACE)

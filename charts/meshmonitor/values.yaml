@@ -33,6 +33,12 @@ nodePort:
   enabled: false
   port: 30823
 
+persistence:
+  enabled: false
+  storageClassName: ""
+  size: 5Gi
+  mountPath: /data
+
 resources: {}
 nodeSelector: {}
 tolerations: []
