@@ -28,6 +28,7 @@ No manual intervention needed - just bump the version in `Chart.yaml` and push!
 
 | Chart | Description | Source |
 |-------|-------------|--------|
+| **immich** | Self-hosted photo and video backup solution | https://github.com/bgulla/immich-charts |
 | **kitchensink** | Kitchen sink demo application | |
 | **kubeups** | Kubernetes UPS monitoring | |
 | **meshmonitor** | Meshtastic Radio monitoring solution | https://github.com/yeraze/meshmonitor |
