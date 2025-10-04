@@ -44,6 +44,12 @@ jobs:
 
           for chart_yaml in $(find . -name 'Chart.yaml'); do
               chart_dir=$(dirname $chart_yaml)
+
+              # Build dependencies if Chart.yaml has dependencies
+              if grep -q "dependencies:" "$chart_yaml"; then
+                  helm dependency build "$chart_dir" || true
+              fi
+
               chart_name=$(helm show chart "$chart_dir" | grep 'name:' | awk '{ print $2 }')
               chart_version=$(helm show chart "$chart_dir" | grep 'version:' | awk '{ print $2 }')
               chart_tag="$chart_name-$chart_version"
