@@ -24,6 +24,7 @@ jobs:
         with:
           ref: main
           path: working
+          submodules: 'recursive'
 
       - name: Create releases
         env:
