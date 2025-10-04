@@ -50,8 +50,8 @@ jobs:
                   helm dependency build "$chart_dir" || true
               fi
 
-              chart_name=$(helm show chart "$chart_dir" | grep 'name:' | awk '{ print $2 }')
-              chart_version=$(helm show chart "$chart_dir" | grep 'version:' | awk '{ print $2 }')
+              chart_name=$(grep '^name:' "$chart_yaml" | awk '{ print $2 }')
+              chart_version=$(grep '^version:' "$chart_yaml" | awk '{ print $2 }')
               chart_tag="$chart_name-$chart_version"
 
               if [[ $(curl -s -o /dev/null -H "Authorization: Bearer $GITHUB_TOKEN" -w "%{http_code}" https://api.github.com/repos/$GITHUB_REPOSITORY/releases/tags/$chart_tag) == "404" ]]; then
