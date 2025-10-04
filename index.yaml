@@ -19,13 +19,13 @@ entries:
           description: Made chart available through OCI repository
     apiVersion: v2
     appVersion: v1.143.1
-    created: "2025-10-04T19:08:30.929725501Z"
+    created: "2025-10-04T19:23:32.237277522Z"
     dependencies:
     - name: common
       repository: https://bjw-s-labs.github.io/helm-charts
       version: 1.4.0
     description: A chart to power Immich (immich.app) running on kubernetes
-    digest: 1da84653a0d917f89341f7aebcde4313182c6b81938b49b4313225c1eb27863f
+    digest: 63ab71223af08f952d67183eefd2fff2ebc77f96762e6ae96bfa5c9e289cb25d
     home: https://immich.app/
     icon: https://raw.githubusercontent.com/immich-app/immich/main/design/immich-logo.svg
     maintainers:
@@ -43,9 +43,9 @@ entries:
   kitchensink:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-10-04T19:08:25.517524163Z"
+    created: "2025-10-04T19:23:27.666526708Z"
     description: A Helm chart for deploying media applications
-    digest: ef851894aa8094498498605eeb9384b393fe800b3bda3febc0d3add2952fb4f2
+    digest: 8fcf473a494517ed76c901b4162853e10514324e17cc0ecf1170fd5b12b92a11
     name: kitchensink
     urls:
     - https://github.com/bgulla/charts/releases/download/kitchensink-0.1.3/kitchensink-0.1.3.tgz
@@ -80,9 +80,9 @@ entries:
   kubeups:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-10-04T19:08:23.909385576Z"
+    created: "2025-10-04T19:23:26.307443481Z"
     description: A Helm chart for Kubernetes
-    digest: 835110c8c2f858f515978d4d8dc9aa73abb5d1fe2700d5305db27024e16ed3e5
+    digest: 62d6a8c4dec94b3d1ed185d7181c4029efc5ce366fc747cd31217c51491e7954
     name: kubeups
     type: application
     urls:
@@ -91,9 +91,9 @@ entries:
   meshmonitor:
   - apiVersion: v2
     appVersion: latest
-    created: "2025-10-04T19:08:28.844637549Z"
+    created: "2025-10-04T19:23:30.385769235Z"
     description: A Helm chart for deploying Meshmonitor
-    digest: a1542a1d2c798f05490d43c871a7d19e06f38a38036705b75d9805612d09aa11
+    digest: 867544f0f5d417a98012cfb05d466682d449fb07ca0145962f456748bfee1867
     name: meshmonitor
     urls:
     - https://github.com/bgulla/charts/releases/download/meshmonitor-0.1.0/meshmonitor-0.1.0.tgz
@@ -111,21 +111,21 @@ entries:
     version: 2.4.1
   openwebrx:
   - apiVersion: v2
-    created: "2025-10-04T19:08:22.133075539Z"
+    created: "2025-10-04T19:23:24.607991948Z"
     description: Helm chart for deploying OpenWebRX
-    digest: 300845925cc8cb16921eced4037942485120b1b9745e922092e006c798dec6d5
+    digest: d8cb55b5bde44c7fe85d7b678dfbf1536b24a2e94d1ce75cad1510dac76976df
     name: openwebrx
     urls:
     - https://github.com/bgulla/charts/releases/download/openwebrx-0.1.0/openwebrx-0.1.0.tgz
     version: 0.1.0
   rancher-demo:
   - apiVersion: v2
-    created: "2025-10-04T19:08:27.199002748Z"
+    created: "2025-10-04T19:23:29.047785718Z"
     description: A Helm chart for Kubernetes to deploy the bgulla/rancher-demo Docker
       image
-    digest: 3321b82c0dca853bec09c15dd7224fc8365ddf35bf23cfcc9f731dd90d9ef1cd
+    digest: d6f35ad3ac54501bef5a10fec702df58ecbed464a924b0a54b6680e2ede95360
     name: rancher-demo
     urls:
     - https://github.com/bgulla/charts/releases/download/rancher-demo-0.1.0/rancher-demo-0.1.0.tgz
     version: 0.1.0
-generated: "2025-10-04T19:08:30.927217168Z"
+generated: "2025-10-04T19:23:32.234691771Z"
