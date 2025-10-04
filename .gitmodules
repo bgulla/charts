@@ -1,0 +1,3 @@
+[submodule "charts/immich-charts"]
+	path = charts/immich-charts
+	url = https://github.com/bgulla/immich-charts
