@@ -17,8 +17,16 @@ PUID: 1000
 PGID: 1000
 
 # env: []
-env: 
+env:
   TZ: "America/New_York"
+
+# envFrom allows you to set environment variables from ConfigMaps or Secrets
+# envFrom: []
+# envFrom:
+#   - configMapRef:
+#       name: transmission-openvpn-config
+#   - secretRef:
+#       name: transmission-openvpn-secret
 
 ingress:
   enabled: false

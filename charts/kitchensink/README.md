@@ -1,5 +1,14 @@
 # KitchenSink CHART!
 
+A flexible Helm chart for deploying media applications and other workloads on Kubernetes.
+
+## Features
+
+- Configurable persistence (PVC and NFS mounts)
+- Support for environment variables via `env` and `envFrom` (ConfigMaps and Secrets)
+- Ingress configuration with annotations
+- Customizable resource limits and node affinity
+
 ## Setting Up via Helm
 ```bash
 > helm repo add bgulla https://bgulla.github.io/charts
@@ -49,8 +58,15 @@ service:
 PUID: 1027
 PGID: 100
 
-env: 
+env:
   AUDIO_DOWNLOAD_DIR: "/audio"
+
+# envFrom allows you to set environment variables from ConfigMaps or Secrets
+# envFrom:
+#   - configMapRef:
+#       name: app-config
+#   - secretRef:
+#       name: app-secrets
 
 ingress:
   enabled: true
@@ -94,6 +110,61 @@ nodeSelector: {}
 tolerations: []
 affinity: {}
 
+```
+
+## Configuration
+
+### Environment Variables
+
+The chart supports two ways to configure environment variables:
+
+#### Direct Environment Variables (`env`)
+Set individual environment variables using key-value pairs:
+
+```yaml
+env:
+  TZ: "America/New_York"
+  AUDIO_DOWNLOAD_DIR: "/audio"
+```
+
+#### Environment Variables from ConfigMaps/Secrets (`envFrom`)
+Load all environment variables from ConfigMaps or Secrets:
+
+```yaml
+envFrom:
+  - configMapRef:
+      name: transmission-openvpn-config
+  - secretRef:
+      name: transmission-openvpn-secret
+```
+
+This is useful for applications that require many environment variables or when you want to manage configuration separately from the Helm values.
+
+### Persistence
+
+The chart supports two types of persistence:
+
+#### PVC Storage
+```yaml
+persistence:
+  config:
+    enabled: true
+    storageClass: ""
+    accessMode: ReadWriteMany
+    size: 1Gi
+    mountPath: /config
+```
+
+#### NFS Mounts
+```yaml
+persistence:
+  nfs:
+    enabled: true
+    mounts:
+      - name: media-videos
+        server: nas1.example.com
+        path: "/volume1/media/videos"
+        mountPath: "/downloads"
 ```
 
 built by github actions
