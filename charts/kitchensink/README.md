@@ -140,6 +140,20 @@ envFrom:
 
 This is useful for applications that require many environment variables or when you want to manage configuration separately from the Helm values.
 
+### Security Context
+
+The chart supports setting security context options for containers that require additional capabilities (e.g., VPN containers):
+
+```yaml
+securityContext:
+  capabilities:
+    add:
+      - NET_ADMIN
+      - NET_RAW
+```
+
+This is required for applications like transmission-openvpn that need to create TUN devices and modify network routing tables.
+
 ### Persistence
 
 The chart supports two types of persistence:

@@ -28,6 +28,14 @@ env:
 #   - secretRef:
 #       name: transmission-openvpn-secret
 
+# securityContext allows you to set security options for the container
+# securityContext: {}
+# securityContext:
+#   capabilities:
+#     add:
+#       - NET_ADMIN
+#       - NET_RAW
+
 ingress:
   enabled: false
   className: ""
