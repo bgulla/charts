@@ -57,19 +57,63 @@ ingress:
     #     - whoami.tpi.l0l0.lol
 
 persistence:
+  # Legacy single PVC configuration (kept for backward compatibility)
+  # NOTE: For new deployments, prefer using the 'pvcs' array below for better flexibility
   config:
-    enabled: false
-    storageClass: ""
+    enabled: false          # Set to true to create a single PVC named '<release-name>-config'
+    storageClass: ""        # Leave empty to use default storage class
     accessMode: ReadWriteOnce
     size: 1Gi
     mountPath: /config
+
+  # Multiple PVC support - define as many PVCs as needed
+  # Each PVC will be created with name '<release-name>-<name>'
+  pvcs: []
+  # Example configurations:
+  # pvcs:
+  #   # Basic PVC with default storage class
+  #   - name: config
+  #     size: 1Gi
+  #     mountPath: /config
+  #
+  #   # PVC with specific storage class and access mode
+  #   - name: data
+  #     storageClass: "local-path"
+  #     accessMode: ReadWriteOnce  # Options: ReadWriteOnce, ReadWriteMany, ReadOnlyMany
+  #     size: 10Gi
+  #     mountPath: /data
+  #
+  #   # Additional PVC for logs or cache
+  #   - name: logs
+  #     storageClass: "fast-ssd"
+  #     accessMode: ReadWriteOnce
+  #     size: 5Gi
+  #     mountPath: /var/log
+
+  # NFS mount support - mount NFS shares directly (no PVC required)
+  # Multiple NFS mounts can be defined and used alongside PVCs
   nfs:
       enabled: false
-      mounts: 
-        - name: traefik-whoami
-          server: nas1-10g.lark.lol
-          path: "/volume1/media"
-          mountPath: "/media"
+      mounts: []
+      # Example NFS configurations:
+      # mounts:
+      #   # Media library from NAS
+      #   - name: media
+      #     server: nas1-10g.lark.lol
+      #     path: "/volume1/media"
+      #     mountPath: "/media"
+      #
+      #   # Backup directory
+      #   - name: backups
+      #     server: nas1-10g.lark.lol
+      #     path: "/volume1/backups"
+      #     mountPath: "/backups"
+      #
+      #   # Shared configuration
+      #   - name: shared-config
+      #     server: 192.168.1.100
+      #     path: "/export/config"
+      #     mountPath: "/shared"
 
 resources: {}
 nodeSelector: {}

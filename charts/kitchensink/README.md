@@ -156,29 +156,105 @@ This is required for applications like transmission-openvpn that need to create 
 
 ### Persistence
 
-The chart supports two types of persistence:
+The chart supports multiple persistence options that can be used independently or combined:
 
-#### PVC Storage
+#### Multiple PVC Support (Recommended)
+
+Define multiple PersistentVolumeClaims for different mount points:
+
+```yaml
+persistence:
+  pvcs:
+    # Configuration storage
+    - name: config
+      storageClass: "local-path"
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      mountPath: /config
+
+    # Application data
+    - name: data
+      storageClass: "fast-ssd"
+      accessMode: ReadWriteOnce
+      size: 10Gi
+      mountPath: /data
+
+    # Logs or cache
+    - name: logs
+      storageClass: ""  # Uses default storage class
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      mountPath: /var/log
+```
+
+**Parameters:**
+- `name` - Name suffix for the PVC (will be `<release-name>-<name>`)
+- `storageClass` - Storage class name (empty string uses default)
+- `accessMode` - Access mode: `ReadWriteOnce`, `ReadWriteMany`, or `ReadOnlyMany` (defaults to `ReadWriteOnce`)
+- `size` - Storage size (e.g., `1Gi`, `10Gi`)
+- `mountPath` - Container mount path
+
+#### Legacy Single PVC (Backward Compatible)
+
+For existing deployments, the legacy single PVC configuration is still supported:
+
 ```yaml
 persistence:
   config:
     enabled: true
     storageClass: ""
-    accessMode: ReadWriteMany
+    accessMode: ReadWriteOnce
     size: 1Gi
     mountPath: /config
 ```
 
+**Note:** For new deployments, use the `pvcs` array above for greater flexibility.
+
 #### NFS Mounts
+
+Mount NFS shares directly without requiring PVCs. Multiple NFS mounts are supported and can be used alongside PVCs:
+
 ```yaml
 persistence:
   nfs:
     enabled: true
     mounts:
+      # Media library
       - name: media-videos
         server: nas1.example.com
         path: "/volume1/media/videos"
         mountPath: "/downloads"
+
+      # Backup directory
+      - name: backups
+        server: nas1.example.com
+        path: "/volume1/backups"
+        mountPath: "/backups"
+```
+
+#### Combined Example
+
+You can use multiple PVCs and NFS mounts together:
+
+```yaml
+persistence:
+  # Multiple PVCs for app data
+  pvcs:
+    - name: config
+      size: 1Gi
+      mountPath: /config
+    - name: cache
+      size: 5Gi
+      mountPath: /cache
+
+  # NFS mounts for shared media
+  nfs:
+    enabled: true
+    mounts:
+      - name: media
+        server: nas1-10g.lark.lol
+        path: "/volume1/media"
+        mountPath: "/media"
 ```
 
 built by github actions

@@ -49,6 +49,10 @@ spec:
             - name: config
               mountPath: {{ .Values.persistence.config.mountPath | default "/config" }}
             {{- end }}
+            {{- range .Values.persistence.pvcs }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+            {{- end }}
             {{- if .Values.persistence.nfs.enabled }}
             {{- range .Values.persistence.nfs.mounts }}
             - name: {{ .name }}
@@ -60,6 +64,11 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: {{ include "kitchensink.fullname" . }}-config
+        {{- end }}
+        {{- range .Values.persistence.pvcs }}
+        - name: {{ .name }}
+          persistentVolumeClaim:
+            claimName: {{ include "kitchensink.fullname" $ }}-{{ .name }}
         {{- end }}
         {{- if .Values.persistence.nfs.enabled }}
         {{- range .Values.persistence.nfs.mounts }}

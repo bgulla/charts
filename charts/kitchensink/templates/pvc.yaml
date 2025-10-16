@@ -15,3 +15,22 @@ spec:
   storageClassName: "{{ .Values.persistence.config.storageClass }}"
   {{- end }}
 {{- end }}
+---
+{{- range .Values.persistence.pvcs }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "kitchensink.fullname" $ }}-{{ .name }}
+  labels:
+    {{- include "kitchensink.labels" $ | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .accessMode | default "ReadWriteOnce" }}
+  resources:
+    requests:
+      storage: {{ .size }}
+  {{- if .storageClass }}
+  storageClassName: "{{ .storageClass }}"
+  {{- end }}
+---
+{{- end }}
