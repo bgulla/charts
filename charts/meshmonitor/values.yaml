@@ -3,6 +3,7 @@ fullnameOverride: meshmonitor
 
 image:
   repository: harbor.l0l0.lol/proxy-ghcr/yeraze/meshmonitor
+#  repository: ghcr.io/yeraze/meshmonitor
   tag: latest
   pullPolicy: Always
 
@@ -17,11 +18,12 @@ env:
 ingress:
   enabled: false
   className: ""
-  annotations: {}
-    # gethomepage.dev/enabled: "true"
-    # gethomepage.dev/description: Meshtastic Monitor
-    # gethomepage.dev/group: Monitoring
-    # gethomepage.dev/name: Meshmonitor
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/description: Meshtastic Monitor
+    gethomepage.dev/group: Monitoring
+    gethomepage.dev/name: Meshmonitor
+    gethomepage.dev/icon: https://raw.githubusercontent.com/meshtastic/design/master/logo/logo.svg
   hosts:
     - host: meshmonitor.example.com
       paths:

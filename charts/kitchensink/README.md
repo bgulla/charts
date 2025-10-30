@@ -7,6 +7,7 @@ A flexible Helm chart for deploying media applications and other workloads on Ku
 - Configurable persistence (PVC and NFS mounts)
 - Support for environment variables via `env` and `envFrom` (ConfigMaps and Secrets)
 - Ingress configuration with annotations
+- Built-in Homepage dashboard integration with automatic pod discovery
 - Customizable resource limits and node affinity
 
 ## Setting Up via Helm
@@ -71,12 +72,7 @@ env:
 ingress:
   enabled: true
   className: ""
-  annotations:
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/description: download the tube
-    gethomepage.dev/group: Media
-    gethomepage.dev/name: metube
-    gethomepage.dev/icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1024px-YouTube_full-color_icon_%282017%29.svg.png"
+  annotations: {}
   hosts:
     - host: metube.tpi.l0l0.lol
       paths:
@@ -86,6 +82,13 @@ ingress:
     # - secretName: tls-tpi-wildcard
       # hosts:
       #   - metube.tpi.l0l0.lol
+
+homepage:
+  enabled: true
+  name: "Metube"
+  description: "Download the tube"
+  group: "Media"
+  icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1024px-YouTube_full-color_icon_%282017%29.svg.png"
 
 persistence:
   config:
@@ -153,6 +156,46 @@ securityContext:
 ```
 
 This is required for applications like transmission-openvpn that need to create TUN devices and modify network routing tables.
+
+### Homepage Integration
+
+The chart includes built-in support for [Homepage](https://gethomepage.dev/), a modern, customizable application dashboard. Homepage provides [Kubernetes service discovery](https://gethomepage.dev/latest/widgets/services/kubernetes/) through annotations.
+
+#### Configuration
+
+Enable Homepage integration by setting `homepage.enabled: true` and providing the display information:
+
+```yaml
+homepage:
+  enabled: true
+  name: "Metube"
+  description: "YouTube downloader"
+  group: "Media"
+  icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1024px-YouTube_full-color_icon_%282017%29.svg.png"
+```
+
+**Parameters:**
+- `enabled` - Toggle Homepage integration (default: `false`)
+- `name` - Display name shown in Homepage dashboard
+- `description` - Short description of the service
+- `group` - Category/group for organizing services in Homepage
+- `icon` - Icon URL or [Material Design Icons](https://pictogrammers.com/library/mdi/) name (e.g., `mdi-plex`)
+
+#### How It Works
+
+When enabled, the chart automatically adds the required annotations to both the Ingress and Service resources:
+- `gethomepage.dev/enabled: "true"`
+- `gethomepage.dev/name: <name>`
+- `gethomepage.dev/description: <description>`
+- `gethomepage.dev/group: <group>`
+- `gethomepage.dev/icon: <icon>`
+- `gethomepage.dev/pod-selector: "app.kubernetes.io/instance=<release-name>"`
+
+The `pod-selector` annotation is automatically configured to match your Helm release, ensuring Homepage can correctly discover and monitor the service.
+
+**Note:** The old method of manually adding Homepage annotations to `ingress.annotations` is deprecated. Use the `homepage` section instead for cleaner configuration.
+
+For more information about Homepage's Kubernetes integration, see the [Homepage Kubernetes documentation](https://gethomepage.dev/latest/widgets/services/kubernetes/).
 
 ### Persistence
 

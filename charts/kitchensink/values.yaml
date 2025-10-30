@@ -39,13 +39,9 @@ env:
 ingress:
   enabled: false
   className: ""
-  annotations:
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/description: whoami test
-    gethomepage.dev/group: Infra
-    gethomepage.dev/name: Traefik Whoami Cakitchensinky
-    gethomepage.dev/icon: "https://avatars.githubusercontent.com/u/73049443?s=280&v=4"
-
+  annotations: {}
+  # Note: Homepage annotations have been moved to the 'homepage' section below
+  # No need to configure them here anymore
   hosts:
     - host: cakitchensinky.l0l0.lol
       paths:
@@ -55,6 +51,15 @@ ingress:
     # - secretName: tls-tpi-wildcard
     #   hosts:
     #     - whoami.tpi.l0l0.lol
+
+# Homepage integration configuration
+homepage:
+  enabled: false
+  name: ""              # Display name in Homepage
+  description: ""       # Service description
+  group: ""            # Group/category in Homepage
+  icon: ""             # Icon URL or mdi icon name
+  # The pod-selector is automatically set to match the Helm release instance
 
 persistence:
   # Legacy single PVC configuration (kept for backward compatibility)

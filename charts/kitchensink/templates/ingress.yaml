@@ -7,6 +7,14 @@ metadata:
     {{- range $key, $value := .Values.ingress.annotations }}
       {{ $key }}: {{ $value | quote }}
     {{- end }}
+    {{- if .Values.homepage.enabled }}
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: {{ .Values.homepage.name | quote }}
+    gethomepage.dev/description: {{ .Values.homepage.description | quote }}
+    gethomepage.dev/group: {{ .Values.homepage.group | quote }}
+    gethomepage.dev/icon: {{ .Values.homepage.icon | quote }}
+    gethomepage.dev/pod-selector: "app.kubernetes.io/instance={{ .Release.Name }}"
+    {{- end }}
 spec:
   rules:
     {{- range .Values.ingress.hosts }}

@@ -3,3 +3,12 @@ name: meshmonitor
 description: A Helm chart for deploying Meshmonitor
 version: 0.1.0
 appVersion: "latest"
+annotations:
+  artifacthub.io/images: |
+    - name: meshmonitor
+      image: ghcr.io/meshtastic/meshmonitor:latest
+  artifacthub.io/links: |
+    - name: source
+      url: https://github.com/meshtastic/meshmonitor
+  home: https://meshtastic.org
+icon: https://raw.githubusercontent.com/meshtastic/design/master/web/src/img/meshtastic-design-logo-circle.svg

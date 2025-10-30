@@ -4,6 +4,15 @@ metadata:
   name: {{ include "kitchensink.fullname" . }}
   labels:
     {{- include "kitchensink.labels" . | nindent 4 }}
+  {{- if .Values.homepage.enabled }}
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: {{ .Values.homepage.name | quote }}
+    gethomepage.dev/description: {{ .Values.homepage.description | quote }}
+    gethomepage.dev/group: {{ .Values.homepage.group | quote }}
+    gethomepage.dev/icon: {{ .Values.homepage.icon | quote }}
+    gethomepage.dev/pod-selector: "app.kubernetes.io/instance={{ .Release.Name }}"
+  {{- end }}
 spec:
   type: {{ .Values.service.type }}
   ports:
