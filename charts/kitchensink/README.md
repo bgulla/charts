@@ -6,6 +6,7 @@ A flexible Helm chart for deploying media applications and other workloads on Ku
 
 - Configurable persistence (PVC and NFS mounts)
 - Support for environment variables via `env` and `envFrom` (ConfigMaps and Secrets)
+- ConfigMap and Secret volume mounts for configuration files and credentials
 - Ingress configuration with annotations
 - Built-in Homepage dashboard integration with automatic pod discovery
 - Customizable resource limits and node affinity
@@ -196,6 +197,79 @@ The `pod-selector` annotation is automatically configured to match your Helm rel
 **Note:** The old method of manually adding Homepage annotations to `ingress.annotations` is deprecated. Use the `homepage` section instead for cleaner configuration.
 
 For more information about Homepage's Kubernetes integration, see the [Homepage Kubernetes documentation](https://gethomepage.dev/latest/widgets/services/kubernetes/).
+
+### ConfigMap and Secret Volume Mounts
+
+The chart supports mounting ConfigMaps and Secrets as files in the container. This is useful for configuration files, credentials, certificates, and other sensitive data.
+
+#### Mounting Entire ConfigMaps or Secrets
+
+Mount all keys from a ConfigMap or Secret as files in a directory:
+
+```yaml
+volumeMounts:
+  # Mount all keys from ConfigMap as files
+  - name: app-config
+    type: configMap
+    configMapName: my-app-config
+    mountPath: /etc/config
+
+  # Mount all keys from Secret as files
+  - name: app-secrets
+    type: secret
+    secretName: my-app-secrets
+    mountPath: /etc/secrets
+```
+
+#### Mounting Specific Files
+
+Mount a single key from a ConfigMap or Secret as a specific file:
+
+```yaml
+volumeMounts:
+  # Mount a specific config file
+  - name: nginx-config
+    type: configMap
+    configMapName: nginx-settings
+    mountPath: /etc/nginx/nginx.conf
+    subPath: nginx.conf
+
+  # Mount SSH private key with specific permissions
+  - name: ssh-key
+    type: secret
+    secretName: ssh-credentials
+    mountPath: /root/.ssh/id_rsa
+    subPath: id_rsa
+    defaultMode: 0600
+    readOnly: true
+```
+
+#### Advanced: Selective Key Mapping
+
+Mount specific keys with custom filenames using the `items` parameter:
+
+```yaml
+volumeMounts:
+  - name: app-config
+    type: configMap
+    configMapName: my-app-config
+    mountPath: /etc/config
+    items:
+      - key: database.yaml
+        path: db-config.yaml
+      - key: api-settings.json
+        path: api.json
+```
+
+**Parameters:**
+- `name` - Unique name for the volume mount
+- `type` - Either `configMap` or `secret`
+- `configMapName` / `secretName` - Name of the ConfigMap or Secret
+- `mountPath` - Where to mount in the container
+- `subPath` - (Optional) Mount a single file instead of entire directory
+- `defaultMode` - (Optional) File permissions in octal (e.g., `0600`, `0644`)
+- `readOnly` - (Optional) Mount as read-only (default: false)
+- `items` - (Optional) Map specific keys to custom filenames
 
 ### Persistence
 

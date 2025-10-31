@@ -120,6 +120,38 @@ persistence:
       #     path: "/export/config"
       #     mountPath: "/shared"
 
+# ConfigMap and Secret volume mounts
+# Mount ConfigMaps or Secrets as files in the container
+volumeMounts: []
+# Example configurations:
+# volumeMounts:
+#   # Mount entire ConfigMap as files
+#   - name: app-config
+#     type: configMap
+#     configMapName: my-app-config
+#     mountPath: /etc/config
+#
+#   # Mount entire Secret as files
+#   - name: app-secrets
+#     type: secret
+#     secretName: my-app-secrets
+#     mountPath: /etc/secrets
+#
+#   # Mount specific keys from ConfigMap
+#   - name: single-config-file
+#     type: configMap
+#     configMapName: my-config
+#     mountPath: /etc/app/config.yaml
+#     subPath: config.yaml
+#
+#   # Mount specific keys from Secret with custom file permissions
+#   - name: ssh-key
+#     type: secret
+#     secretName: ssh-credentials
+#     mountPath: /root/.ssh/id_rsa
+#     subPath: id_rsa
+#     defaultMode: 0600
+
 resources: {}
 nodeSelector: {}
 tolerations: []

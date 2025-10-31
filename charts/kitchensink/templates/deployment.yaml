@@ -59,6 +59,16 @@ spec:
               mountPath: {{ .mountPath }}
             {{- end }}
             {{- end }}
+            {{- range .Values.volumeMounts }}
+            - name: {{ .name }}
+              mountPath: {{ .mountPath }}
+              {{- if .subPath }}
+              subPath: {{ .subPath }}
+              {{- end }}
+              {{- if .readOnly }}
+              readOnly: {{ .readOnly }}
+              {{- end }}
+            {{- end }}
       volumes:
         {{- if .Values.persistence.config.enabled }}
         - name: config
@@ -77,4 +87,34 @@ spec:
             server: {{ .server }}
             path: {{ .path }}
         {{- end }}
+        {{- end }}
+        {{- range .Values.volumeMounts }}
+        - name: {{ .name }}
+          {{- if eq .type "configMap" }}
+          configMap:
+            name: {{ .configMapName }}
+            {{- if .defaultMode }}
+            defaultMode: {{ .defaultMode }}
+            {{- end }}
+            {{- if .items }}
+            items:
+              {{- range .items }}
+              - key: {{ .key }}
+                path: {{ .path }}
+              {{- end }}
+            {{- end }}
+          {{- else if eq .type "secret" }}
+          secret:
+            secretName: {{ .secretName }}
+            {{- if .defaultMode }}
+            defaultMode: {{ .defaultMode }}
+            {{- end }}
+            {{- if .items }}
+            items:
+              {{- range .items }}
+              - key: {{ .key }}
+                path: {{ .path }}
+              {{- end }}
+            {{- end }}
+          {{- end }}
         {{- end }}
