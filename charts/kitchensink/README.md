@@ -9,6 +9,7 @@ A flexible Helm chart for deploying media applications and other workloads on Ku
 - ConfigMap and Secret volume mounts for configuration files and credentials
 - Ingress configuration with annotations
 - Built-in Homepage dashboard integration with automatic pod discovery
+- External DNS integration for automatic DNS record management
 - Customizable resource limits and node affinity
 
 ## Setting Up via Helm
@@ -197,6 +198,71 @@ The `pod-selector` annotation is automatically configured to match your Helm rel
 **Note:** The old method of manually adding Homepage annotations to `ingress.annotations` is deprecated. Use the `homepage` section instead for cleaner configuration.
 
 For more information about Homepage's Kubernetes integration, see the [Homepage Kubernetes documentation](https://gethomepage.dev/latest/widgets/services/kubernetes/).
+
+### External DNS Integration
+
+The chart includes built-in support for [external-dns](https://github.com/kubernetes-sigs/external-dns), which automatically manages DNS records for your ingress resources.
+
+#### Basic Configuration
+
+Enable external-dns to automatically manage DNS records for your ingress hostnames:
+
+```yaml
+externalDns:
+  enabled: true
+```
+
+By default, external-dns will use all hostnames defined in `ingress.hosts`. The chart automatically generates the `external-dns.alpha.kubernetes.io/hostname` annotation with a comma-separated list of hostnames.
+
+#### Custom Hostnames
+
+You can override the automatic hostname detection and specify custom hostnames:
+
+```yaml
+externalDns:
+  enabled: true
+  hostnames:
+    - app.example.com
+    - app-alt.example.com
+```
+
+#### Custom TTL
+
+Set a specific TTL (Time To Live) for DNS records:
+
+```yaml
+externalDns:
+  enabled: true
+  ttl: "300"  # 5 minutes
+```
+
+#### Complete Example
+
+```yaml
+ingress:
+  enabled: true
+  hosts:
+    - host: myapp.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+
+externalDns:
+  enabled: true
+  ttl: "600"
+```
+
+**How It Works:**
+- When enabled, the chart adds `external-dns.alpha.kubernetes.io/hostname` annotation to the Ingress
+- external-dns controller watches for this annotation
+- DNS records are automatically created/updated in your DNS provider (configured in external-dns controller)
+- If you don't specify custom hostnames, all hosts from `ingress.hosts` are used
+
+**Prerequisites:**
+- external-dns controller must be deployed in your cluster
+- external-dns must be configured with your DNS provider credentials
+
+For more information, see the [external-dns documentation](https://github.com/kubernetes-sigs/external-dns).
 
 ### ConfigMap and Secret Volume Mounts
 

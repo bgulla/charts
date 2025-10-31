@@ -61,6 +61,15 @@ homepage:
   icon: ""             # Icon URL or mdi icon name
   # The pod-selector is automatically set to match the Helm release instance
 
+# External DNS configuration
+# Automatically manages DNS records for your ingress hostnames
+externalDns:
+  enabled: false
+  # Hostnames for external-dns to manage (if empty, uses ingress.hosts)
+  # hostnames: []
+  # Optional: Set specific TTL for DNS records
+  # ttl: "300"
+
 persistence:
   # Legacy single PVC configuration (kept for backward compatibility)
   # NOTE: For new deployments, prefer using the 'pvcs' array below for better flexibility

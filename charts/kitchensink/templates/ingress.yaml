@@ -15,6 +15,12 @@ metadata:
     gethomepage.dev/icon: {{ .Values.homepage.icon | quote }}
     gethomepage.dev/pod-selector: "app.kubernetes.io/instance={{ .Release.Name }}"
     {{- end }}
+    {{- if .Values.externalDns.enabled }}
+    external-dns.alpha.kubernetes.io/hostname: {{ include "kitchensink.externalDnsHostnames" . }}
+    {{- if .Values.externalDns.ttl }}
+    external-dns.alpha.kubernetes.io/ttl: {{ .Values.externalDns.ttl | quote }}
+    {{- end }}
+    {{- end }}
 spec:
   rules:
     {{- range .Values.ingress.hosts }}

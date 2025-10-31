@@ -46,3 +46,19 @@ Create a default chart name.
 {{- define "kitchensink.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | trunc 63 | trimSuffix "-" }}
 {{- end }}
+
+{{/*
+Generate external-dns hostname annotation value
+Uses externalDns.hostnames if provided, otherwise extracts from ingress.hosts
+*/}}
+{{- define "kitchensink.externalDnsHostnames" -}}
+{{- if .Values.externalDns.hostnames }}
+{{- join "," .Values.externalDns.hostnames }}
+{{- else }}
+{{- $hosts := list }}
+{{- range .Values.ingress.hosts }}
+{{- $hosts = append $hosts .host }}
+{{- end }}
+{{- join "," $hosts }}
+{{- end }}
+{{- end }}
