@@ -1,0 +1,66 @@
+name: Release Charts to OCI
+
+on:
+  push:
+    branches:
+      - main
+      - '*/*'
+      - '**'
+
+jobs:
+  oci-release:
+    permissions:
+      contents: read
+      packages: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: 'v3.13.0'
+
+      - name: Login to GitHub Container Registry
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | helm registry login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Package and Push Charts to OCI Registry
+        run: |
+          for chart_yaml in $(find charts -name 'Chart.yaml'); do
+            chart_dir=$(dirname $chart_yaml)
+
+            # Build dependencies if Chart.yaml has dependencies
+            if grep -q "dependencies:" "$chart_yaml"; then
+              echo "Building dependencies for $chart_dir"
+              helm dependency build "$chart_dir" || true
+            fi
+
+            chart_name=$(grep '^name:' "$chart_yaml" | awk '{ print $2 }')
+            chart_version=$(grep '^version:' "$chart_yaml" | awk '{ print $2 }')
+
+            echo ""
+            echo "======================================="
+            echo "Processing: $chart_name v$chart_version"
+            echo "======================================="
+
+            # Package the chart
+            helm package "$chart_dir" -d /tmp/charts
+
+            # Push to OCI registry
+            echo "Pushing to oci://ghcr.io/${{ github.repository_owner }}/charts/$chart_name:$chart_version"
+            helm push "/tmp/charts/${chart_name}-${chart_version}.tgz" oci://ghcr.io/${{ github.repository_owner }}/charts
+
+            # Clean up
+            rm -f "/tmp/charts/${chart_name}-${chart_version}.tgz"
+
+            echo "✓ Successfully pushed $chart_name:$chart_version"
+          done
+
+      - name: Logout from GHCR
+        if: always()
+        run: |
+          helm registry logout ghcr.io

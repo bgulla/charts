@@ -16,11 +16,17 @@ A collection of personal Helm charts for Kubernetes deployments.
 
 ## Automated Chart Releases
 
-This repository uses GitHub Actions to automatically build and publish Helm charts. On every push, the workflow:
-- Packages all charts with updated versions
-- Creates GitHub releases with chart artifacts
+This repository uses GitHub Actions to automatically build and publish Helm charts in **two formats**:
+
+### Traditional Repository (GitHub Pages)
+- Creates GitHub releases with chart artifacts (.tgz)
 - Updates the Helm repository index on GitHub Pages
-- Makes charts immediately available via `helm repo add`
+- Available via `helm repo add`
+
+### OCI Registry (GitHub Container Registry)
+- Publishes charts as OCI artifacts to ghcr.io
+- No repository index needed
+- Native support in modern Helm and GitOps tools
 
 No manual intervention needed - just bump the version in `Chart.yaml` and push!
 
@@ -37,6 +43,8 @@ No manual intervention needed - just bump the version in `Chart.yaml` and push!
 
 ## Installation
 
+### Method 1: Traditional Helm Repository (GitHub Pages)
+
 Add this Helm repository:
 
 ```bash
@@ -48,6 +56,30 @@ Install a chart:
 
 ```bash
 helm install my-release bgulla/<chart-name>
+```
+
+### Method 2: OCI Registry (Recommended for CI/CD)
+
+Install directly from the OCI registry (no `helm repo add` needed):
+
+```bash
+# Install a specific version
+helm install my-release oci://ghcr.io/bgulla/charts/<chart-name> --version <version>
+
+# Example: Install kitchensink v0.1.0
+helm install whoami oci://ghcr.io/bgulla/charts/kitchensink --version 0.1.0
+```
+
+**OCI Benefits:**
+- No repository management needed
+- Atomic, versioned artifacts
+- Better for GitOps workflows (ArgoCD, Flux)
+- Same infrastructure as container images
+
+To see available versions:
+```bash
+# List tags (requires crane or similar OCI tool)
+crane ls ghcr.io/bgulla/charts/<chart-name>
 ```
 
 ## Development
