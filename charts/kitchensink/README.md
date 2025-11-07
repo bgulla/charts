@@ -8,6 +8,7 @@ A flexible Helm chart for deploying media applications and other workloads on Ku
 - Support for environment variables via `env` and `envFrom` (ConfigMaps and Secrets)
 - ConfigMap and Secret volume mounts for configuration files and credentials
 - Ingress configuration with annotations
+- LoadBalancer service support with optional IP assignment and source range restrictions
 - Built-in Homepage dashboard integration with automatic pod discovery
 - External DNS integration for automatic DNS record management
 - Customizable resource limits and node affinity
@@ -158,6 +159,53 @@ securityContext:
 ```
 
 This is required for applications like transmission-openvpn that need to create TUN devices and modify network routing tables.
+
+### Service Configuration
+
+The chart supports multiple service types including ClusterIP, NodePort, and LoadBalancer.
+
+#### LoadBalancer Service
+
+Use a LoadBalancer service to expose your application with an external IP address:
+
+```yaml
+service:
+  type: LoadBalancer
+  port: 80
+```
+
+#### LoadBalancer with Specific IP
+
+Reserve and use a specific IP address for your LoadBalancer (requires your cloud provider or MetalLB to support IP allocation):
+
+```yaml
+service:
+  type: LoadBalancer
+  port: 80
+  loadBalancerIP: "192.168.1.100"
+```
+
+#### LoadBalancer with Source Range Restrictions
+
+Restrict which IP addresses can access your LoadBalancer:
+
+```yaml
+service:
+  type: LoadBalancer
+  port: 80
+  loadBalancerIP: "192.168.1.100"
+  loadBalancerSourceRanges:
+    - "10.0.0.0/8"
+    - "192.168.1.0/24"
+```
+
+**Parameters:**
+- `type` - Service type: `ClusterIP`, `NodePort`, or `LoadBalancer`
+- `port` - Service port number
+- `loadBalancerIP` - (Optional) Specific IP address for LoadBalancer type
+- `loadBalancerSourceRanges` - (Optional) List of IP CIDR ranges allowed to access the LoadBalancer
+
+**Note:** LoadBalancer support requires a load balancer implementation in your cluster (e.g., cloud provider load balancer, MetalLB, etc.)
 
 ### Homepage Integration
 

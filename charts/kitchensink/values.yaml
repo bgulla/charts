@@ -11,6 +11,9 @@ service:
   type: ClusterIP
   # port: 8989 # sokitchensinkr
   port: 80 # prowlarr
+  # LoadBalancer specific settings (only used when type: LoadBalancer)
+  # loadBalancerIP: ""  # Optional: specific IP address for LoadBalancer
+  # loadBalancerSourceRanges: []  # Optional: list of IP CIDR ranges to whitelist
 
 # Add the following for configurable UID and GID
 PUID: 1000
