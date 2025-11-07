@@ -120,5 +120,11 @@ spec:
                 path: {{ .path }}
               {{- end }}
             {{- end }}
+          {{- else if eq .type "hostPath" }}
+          hostPath:
+            path: {{ .hostPath.path }}
+            {{- if .hostPath.hostPathType }}
+            type: {{ .hostPath.hostPathType }}
+            {{- end }}
           {{- end }}
         {{- end }}
