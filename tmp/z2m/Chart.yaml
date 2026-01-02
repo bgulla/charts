@@ -1,0 +1,4 @@
+apiVersion: v2
+name: zigbee2mqtt-chart
+description: A Helm chart for zigbee2mqtt
+version: 0.1.0
