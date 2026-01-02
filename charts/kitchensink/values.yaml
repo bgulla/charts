@@ -7,6 +7,19 @@ image:
   tag: v1.11
   pullPolicy: IfNotPresent
 
+# Optional: Override the container command
+# command: []
+# Example:
+# command:
+#   - /bin/sh
+#   - -c
+
+# Optional: Override the container args
+# args: []
+# Example:
+# args:
+#   - serve
+
 service:
   type: ClusterIP
   # port: 8989 # sokitchensinkr
