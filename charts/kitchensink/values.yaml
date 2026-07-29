@@ -181,3 +181,11 @@ resources: {}
 nodeSelector: {}
 tolerations: []
 affinity: {}
+
+# Host device passthrough (e.g. GPU, DRI)
+# Each entry is a host device path; mounted at the same path inside the container.
+# devices: []
+# devices:
+#   - /dev/dri
+#   - /dev/nvidia0
+devices: []
