@@ -120,7 +120,6 @@ spec:
         - name: device-{{ . | replace "/" "-" | trimPrefix "-" }}
           hostPath:
             path: {{ . }}
-            type: CharDevice
         {{- end }}
         {{- range .Values.volumeMounts }}
         - name: {{ .name }}
