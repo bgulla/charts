@@ -177,6 +177,22 @@ volumeMounts: []
 #     subPath: id_rsa
 #     defaultMode: 0600
 
+# Init containers run before the main container starts.
+# Useful for setup tasks like permissions fixes, config generation, or waiting for dependencies.
+# initContainers: []
+# Example:
+# initContainers:
+#   - name: init-permissions
+#     image: busybox:latest
+#     command: ["sh", "-c", "chown -R 1000:1000 /config"]
+#     volumeMounts:
+#       - name: config
+#         mountPath: /config
+#   - name: wait-for-db
+#     image: busybox:latest
+#     command: ["sh", "-c", "until nc -z db 5432; do sleep 2; done"]
+initContainers: []
+
 resources: {}
 nodeSelector: {}
 tolerations: []
